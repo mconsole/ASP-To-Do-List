@@ -1,0 +1,67 @@
+﻿@model List<ASP_To_Do_List.Models.ListItem>
+
+@{
+    Layout = null;
+}
+
+<html>
+    <head>
+        <title>To-Do List</title>
+        <meta charset="utf-8" />
+        <link type="text/css" rel="stylesheet" href=@Styles.Render("~/Content/css")>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <h2>To-Do List</h2>
+            </div>
+            <div class="row">
+                <form asp-action="Create" asp-controller="Home">
+                    <div>
+                        <label>Task:</label>
+                        <input id="TaskName" name="TaskName" type="text" />
+                        <label>Due Date:</label>
+                        <input id="DueDate" name="DueDate" type="text" />
+                        <input id="Submit" name="Submit" type="submit" />
+                     </div>
+                </form>
+                <ul>
+                    @foreach (var item in Model)
+                    {
+                    <li>@item.Item @item.Date</li>                
+                    }
+                </ul>
+            </div>
+        </div>
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Submit").click(function () {
+
+                var taskName = $("#TaskName").val();
+                var dueDate = $("#DueDate").val();
+
+                if (taskName != "" && dueDate != "") {
+                    $.ajax({
+                        method: "POST",
+                        url: "/Home/Create",
+                        data: {
+                            taskName,
+                            dueDate
+                        }
+                    })
+
+                    $("#TaskName").val("");
+                    $("#DueDate").val("");
+                }
+                else {
+                    alert("Please complete the form")
+                }
+            });
+        });
+    </script>
+    </body>
+</html>
