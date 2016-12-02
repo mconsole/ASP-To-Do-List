@@ -14,7 +14,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <h2>To-Do List</h2>
+                <h1>To-Do List</h1>
             </div>
             <div class="row">
                 <form asp-action="Create" asp-controller="Home">
@@ -22,14 +22,17 @@
                         <label>Task:</label>
                         <input id="TaskName" name="TaskName" type="text" />
                         <label>Due Date:</label>
-                        <input id="DueDate" name="DueDate" type="text" />
+                        <input id="DueDate" name="DueDate" type="date" />
                         <input id="Submit" name="Submit" type="submit" />
                      </div>
                 </form>
                 <ul>
                     @foreach (var item in Model)
                     {
-                    <li>@item.Item @item.Date</li>                
+                        <li>
+                            <label>@item.Item (@item.Date)</label>
+                            <input id="Delete" name="Delete" type="submit" value="X" />
+                        </li>
                     }
                 </ul>
             </div>
